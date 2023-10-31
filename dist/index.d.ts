@@ -1,26 +1,13 @@
-import { BarSeriesOption, ComposeOption, DatasetComponentOption, GridComponentOption, LineSeriesOption, PieSeriesOption, TitleComponentOption, TooltipComponentOption } from "echarts";
-import React from "react";
+import { BarSeriesOption, ComposeOption, DatasetComponentOption, ECharts, GridComponentOption, LineSeriesOption, PieSeriesOption, TitleComponentOption, TooltipComponentOption } from "echarts";
+import React, { HTMLAttributes } from "react";
 export type PieOption = ComposeOption<PieSeriesOption | TitleComponentOption | DatasetComponentOption | GridComponentOption | TooltipComponentOption>;
-export interface PieProps {
-    width: number;
-    height: number;
-    option: PieOption;
-}
 export type BarOption = ComposeOption<BarSeriesOption | TitleComponentOption | DatasetComponentOption | GridComponentOption | TooltipComponentOption>;
-export interface BarProps {
-    width: number;
-    height: number;
-    option: BarOption;
-}
 export type LineOption = ComposeOption<LineSeriesOption | TitleComponentOption | DatasetComponentOption | GridComponentOption | TooltipComponentOption>;
-export interface LineProps {
+export type OriginEchartProps<T extends PieOption | BarOption | LineOption = PieOption | BarOption | LineOption> = T extends PieOption | BarOption | LineOption ? {
     width: number;
     height: number;
-    option: LineOption;
-}
-/** @description 饼图 */
-export declare const Pie: React.FC<PieProps>;
-/** @description 柱状图 */
-export declare const Bar: React.FC<BarProps>;
-/** @description 折线图 */
-export declare const Line: React.FC<LineProps>;
+    option: T;
+} & Omit<HTMLAttributes<HTMLDivElement>, "children"> : never;
+export type EchartProps = OriginEchartProps;
+declare const Echart: React.ForwardRefExoticComponent<EchartProps & React.RefAttributes<ECharts>>;
+export default Echart;
